@@ -77,6 +77,7 @@ for row in range(len(world)):
         elif item in items:
             items[item].append((row, world[row].index(item)))
 
+
 # # Removes an item from the dictionary by the index of the item in the list
 # temp = items["C"]
 # del temp[0]
@@ -87,7 +88,7 @@ for row in range(len(world)):
 location = list(items["P"][0])
 
 
-def main(world, fog_world, items, location) -> None:    
+def main(world, location) -> None:    
     """ Main entry point for the game """
     # Create weapons
     sword = Weapon("Toby", 25, 50)
@@ -110,20 +111,16 @@ def main(world, fog_world, items, location) -> None:
         system("clear")
         col = location[1]
         row = location[0]
-        fog_world = update_map(fog_world, items, location)
-        # print(world)
-        # input()
-        fog_world = update_ascii_map(fog_world, row, col)
-        print_map(fog_world)
-
-        world_list = map2dlist(fog_world)
+        
+        world = update_ascii_map(world, row, col)
+        print_map(world)
+        world_list = map2dlist(world)
         print(location)
-        # print(items["P"][0])
         
         direction = getkey()
-        world_list, location, items = check_collision(direction, world_list, location, items)
-        fog_world = list2ascii(world_list)
+        world_list, location = check_collision(direction, world_list, location)
+        world = list2ascii(world_list)
 
 if __name__ == "__main__":
     """ This is executed when the file is run from the command line """
-    main(world, fog_world, items, location)
+    main(world, location)
