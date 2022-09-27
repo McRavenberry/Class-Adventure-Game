@@ -1,5 +1,5 @@
 from getkey import getkey, keys
-
+"""Add items to check_collision"""
 def check_collision(direction, world_list, location):
     """Checks player movement (WASD) for collisions"""
     row = location[0]
@@ -33,6 +33,7 @@ def check_collision(direction, world_list, location):
             world_list[row][col] = "/"
         else:
             location = [row, col]
+    """Save the new player location to the items dictionary and add items dictionary to the return"""
     return world_list, location
 
 def update_ascii_map(world, row, col):
@@ -66,3 +67,36 @@ def list2ascii(world_list):
         j = "".join(world_list[i])
         temp.append(j)
     return temp
+
+"""Add remove_fog function"""
+"""Add items to remove_fog"""
+"""Add items onto map if discovered"""
+def remove_fog(map, items, location: list) -> list:
+    """Pass the map and the coordinate of the player as a list. Returns a map with the fog of war removed for the 3x3 grid around the player."""
+    row, col = location
+    clist = []
+
+    # Finds the 3x3 grid around the player's location
+    for i in range(3):
+        for j in range(3):
+            if [row-1+i,col-1+j] not in clist:
+                clist.append([row-1+i,col-1+j])
+
+    # Converts the map into a list of lists
+    new_map = []
+    for row in map:
+        new_map.append(list(row))
+
+    # Removes the fog of war from the map
+    for i, row in enumerate(new_map):
+        for j, col in enumerate(row):
+            if new_map[i][j] == "/" and [i, j] in clist:
+                new_map[i][j] = " "
+
+    # Coverts the list back into a string
+    map = []
+    for row in new_map:
+        temp = "".join(row)
+        map.append(temp)
+
+    return map

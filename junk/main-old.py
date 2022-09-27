@@ -87,7 +87,7 @@ for row in range(len(world)):
 # Finds the location of the player.  Even if multiple "P" are on the map, the very first "P" is the one that will be used.
 location = list(items["P"][0])
 
-
+"""Add fog_world and items to main"""
 def main(world, location) -> None:    
     """ Main entry point for the game """
     # Create weapons
@@ -111,13 +111,16 @@ def main(world, location) -> None:
         system("clear")
         col = location[1]
         row = location[0]
-        
+"""Change world to fog_world within the while loop.  Do 
+this last. If not implemented, the fog fills in as the 
+player moves around on the map."""        
         world = update_ascii_map(world, row, col)
         print_map(world)
         world_list = map2dlist(world)
         print(location)
         
         direction = getkey()
+"""Add items to check_collision"""
         world_list, location = check_collision(direction, world_list, location)
         world = list2ascii(world_list)
 

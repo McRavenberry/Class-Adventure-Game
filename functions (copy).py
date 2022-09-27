@@ -1,5 +1,5 @@
 from getkey import getkey, keys
-from emoji import emojize, is_emoji
+from emoji import emojize, is_emoji # add is_emoji
 
 def check_collision(direction, world_list, location, items):
     """Checks player movement (WASD) for collisions"""
@@ -106,6 +106,7 @@ def remove_fog(map, items, location: list) -> list:
                 row, col = locations[i]
                 if new_map[row][col] not in "#/P":
                     new_map[row][col] = item
+                
     # Coverts the list back into a string
     map = []
     for row in new_map:
@@ -120,31 +121,36 @@ def emoji_map(map: "ASCII map") -> "emoji map":
             "#" : ":mountain: ", # wall
             "/" : ":fog: ", # fog
             "B" : ":angry_face_with_horns:", # boss
-            "C" : ":flexed_biceps: ", # cave
-            "K" : ":castle:", # king
+            "C" : ":warning: ", # cave
+            "K" : ":crown:", # king
             "L" : ":revolving_hearts:", # love interest
-            "P" : ":frog:", # player
-            "S" : ":money_bag:", # shop/tavern
-            "H" : ":houses: ", # hotel
+            "P" : ":smirking_face:", # player
+            "S" : ":shopping_cart:", # shop/tavern
+            "H" : ":bed: ", # hotel
             "E" : ":chequered_flag:" # exit
     }
     em = []
-    # Compares the ASCII map values to the emoji map key and inserts the cooresponding emoji for the emoji map.  If the value is not in the map key, then it gets printed as empty strings on the map.
+    # Compares the ASCII map values to the emoji map key and inserts the cooresponding emoji for the emoji map.  If the value is not in the map key, then it  gets printed as empty strings on the map.
     for row in range(len(map)):
         trow = ""
         for col in range(len(map[row])):
             symbol = map[row][col]
-            # Adds the emoji to the map if the item is in the dictionary.  Adds a red exclamation mark to the map if the item is in the dictionary but does not include a proper emoji code
-            if symbol in map_key.keys():
+            if symbol != " ":
                 symbol = emojize(map_key[symbol])
-                if not(is_emoji(symbol) or is_emoji(symbol[:-1])):
-                    symbol = emojize(":red_exclamation_mark:")
-            # Adds a double space to the map instead of a single space to accommodate the emojis that are two spaces in size
-            elif symbol == " ":
-                symbol = "  "
-            # Adds a red question mark to the map if the item is not in the dictionary 
             else:
-                symbol = emojize(":red_question_mark:")
+                symbol = "  "
+    """Use this code instead to handle the cases if the emoji code in the dictionary does not exist.  Places a red question mark in its place on the emoji map."""
+    # for row in range(len(map)):
+    #     trow = ""
+    #     for col in range(len(map[row])):
+    #         symbol = map[row][col]
+    #         if symbol == " ":
+    #             symbol = "  "
+    #         elif symbol != " ":
+    #             symbol = emojize(map_key[symbol])
+    #             if not (is_emoji(symbol) or is_emoji(symbol[:-1])):
+    #                 symbol = emojize(":red_question_mark:")
+                    
             trow = trow + symbol
         em.append(trow)
     return em

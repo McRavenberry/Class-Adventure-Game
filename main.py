@@ -20,63 +20,71 @@ Things we need to program:
 10. Menus
 11. Inn/sleep/heal
 12. Use potions
-13. Fog of War
+13. Fog of War ✅
 14. Open world like Zelda
 15. getkey for automatic key press recognition without the need to press ENTER
 16. Save progress
 
 ✅ Save items on map into a dictionary (SEE BELOW) 
 ✅ Make fog of war map
--- Remove fog of war in adjacent tiles
--- If no fog of war present or no player present, draw item on map
+✅ Remove fog of war in adjacent tiles
+✅ If no fog of war present or no player present, draw item on map
 
 """
 
 __author__ = "Mr McGarrah's 7th Period"
-__version__ = "0.1"
+__version__ = "0.2"
 
 from os import system
 from functions import *
 from classes import *
-from getkey import getkey, keys
+from getkey import getkey
 
 # World map and player starting location
 world = [
         "######################",
-        "#      K          S  #",
-        "#                    #",
-        "#  TP       L        #",
-        "#                    #",
-        "#    L               #",
-        "#              L     #",
-        "#                    #",
-        "#  S     C           #",
-        "#              B     #",
-        "#    C               #",
+        "#      K       #  S  #",
+        "#              #     #",
+        "#  HP       L  #     #",
+        "########       #     #",
+        "#    L #       #     #",
+        "#      #       L     #",
+        "#      #             #",
+        "#  S     C   #       #",
+        "#            # B     #",
+        "#    C       #      E#",
         "######################"
     ]
 # Makes a fog world map
 fog_world = []
+
 for row in range(len(world)):
     fog_world.append("")
-    for col in range(len(world[row])):
-        if world[row][col] != "#":
-            fog_world[row] += "/"
-        else:
-            fog_world[row] += "#"
+    fog_world[row] = "/" * len(world[row])
+
 print(fog_world)
 # input()
 
+"""Add the ability to turn map reveal on/off"""
+keep_fog_off = False # True deletes fog as it is cleared.  False fills the fog back in after the player moves.
+if not keep_fog_off:
+    fog = fog_world
+
 # Finds all of the items on the map and places them in a dictionary. Keys are stored in a list with coordinate pairs as tuples.
-key = "BCKLPST" #Boss, Cave, King, Love, Player, Store, Tavern
+
 items = {}
+
+"""  Remove 'and item in key'  """
 for row in range(len(world)):
-    for item in world[row]: 
-        if item not in items and item in key:
+    for i, item in enumerate(world[row]): 
+        if item not in items: 
             items[item] = [(row, world[row].index(item))]
         elif item in items:
-            items[item].append((row, world[row].index(item)))
+            items[item].append((row, i))
 
+
+# print(items["#"])
+# input()
 # # Removes an item from the dictionary by the index of the item in the list
 # temp = items["C"]
 # del temp[0]
@@ -110,15 +118,20 @@ def main(world, fog_world, items, location) -> None:
         system("clear")
         col = location[1]
         row = location[0]
-        fog_world = update_map(fog_world, items, location)
-        # print(world)
-        # input()
-        fog_world = update_ascii_map(fog_world, row, col)
-        print_map(fog_world)
+
+        """Switch between fog modes"""
+        if keep_fog_off:
+            fog_world = remove_fog(fog_world, items, location)
+        else:
+            fog_world = remove_fog(fog, items, location)
+  
+        # fog_world = update_ascii_map(fog_world, row, col)
+        
+        # Turn ASCII map into an emoji map and prints it to the screen
+        print_map(emoji_map(fog_world))
 
         world_list = map2dlist(fog_world)
         print(location)
-        # print(items["P"][0])
         
         direction = getkey()
         world_list, location, items = check_collision(direction, world_list, location, items)
