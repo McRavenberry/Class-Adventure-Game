@@ -2,7 +2,7 @@
 This is a simple Choose Your Own Adventure Game
 
 Things we need to program:
-1. Player 
+1. Player
     - Health ✅
     - Movement ✅
     - Name ✅
@@ -42,63 +42,13 @@ from getkey import getkey
 import time
 
 # World map and player starting location
-world = [
-        "###################",
-        "#      K    #  S  #",
-        "#           #     #",
-        "#  HP    L  #     #",
-        "########    #     #",
-        "#    L #    #     #",
-        "#      #    L     #",
-        "#      #          #",
-        "#  S  C   #       #",
-        "#         # B     #",
-        "#    C    #       #",
-        "#         #       #",
-        "###########       #",
-        "#L B#             #",
-        "#   #   #######   #",
-        "#   #   #S        #",
-        "#   #   #  ########",
-        "#       #        E#",
-        "###################"
-    ]
-# Makes a fog world map
-fog_world = []
-
-for row in range(len(world)):
-    fog_world.append("")
-    fog_world[row] = "/" * len(world[row])
-
-# input()
-
-"""Add the ability to turn map reveal on/off"""
-keep_fog_off = False # True deletes fog as it is cleared.  False fills the fog back in after the player moves.
-if not keep_fog_off:
-    fog = fog_world
-
-# Finds all of the items on the map and places them in a dictionary. Keys are stored in a list with coordinate pairs as tuples.
-
-items = {}
-
-for row in range(len(world)):
-    for i, item in enumerate(world[row]): 
-        if item not in items: 
-            items[item] = [(row, world[row].index(item))]
-        elif item in items:
-            items[item].append((row, i))
 
 
-# print(items["#"])
-# input()
-# # Removes an item from the dictionary by the index of the item in the list
-# temp = items["C"]
-# del temp[0]
-# items["C"] = temp
 
 
-# Finds the location of the player.  Even if multiple "P" are on the map, the very first "P" is the one that will be used.
-location = list(items["P"][0])
+world, fog_world, items, location, keep_fog_off, fog = load_map()
+
+
 
 
 def main(world, fog_world, items, location) -> None:    
@@ -120,13 +70,8 @@ def main(world, fog_world, items, location) -> None:
             input()
             break
         system("clear")
-        
 
-
-
-
-
-
+    input()
     
     # Create weapons
     sword = Weapon("Toby", 25, 50)
@@ -141,13 +86,14 @@ def main(world, fog_world, items, location) -> None:
     potion_list = [health_potion, poison_potion, love_potion]
     
     # Create characters, NPCs, and enemies
-    name = "Trevor"
-    gender = "male"
-    attraction = "female"
-    player = Player(name, gender, attraction)
-    print(player.gold)
-    input()
+    # name = "Trevor"
+    # gender = "male"
+    # attraction = "female"
+    # player = Player(name, gender, attraction)
 
+
+    
+    
     while True:
         # time.sleep(0.2)
         system("clear")
@@ -169,6 +115,22 @@ def main(world, fog_world, items, location) -> None:
         print(location)
         
         direction = getkey()
+        if direction.lower() == "i":
+            system("clear")
+            print("Inventory")
+            input()
+        elif direction.lower() == "s":
+            system("clear")
+            print("Save")
+            input()
+        elif direction.lower() == "p":
+            system("clear")
+            print("Pause")
+            input()
+        elif direction.lower() == "f":
+            system("clear")
+            print("Family history")
+            input()
         time.sleep(0.2)
         world_list, location, items = check_collision(direction, world_list, location, items)
         fog_world = list2ascii(world_list)

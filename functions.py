@@ -3,6 +3,7 @@ from os import system
 from emoji import emojize, is_emoji
 import time
 from classes import Player
+import poi
 
 def check_collision(direction, world_list, location, items):
     """Checks player movement (WASD) for collisions"""
@@ -38,6 +39,23 @@ def check_collision(direction, world_list, location, items):
         else:
             location = [row, col]
     items["P"][0] = location
+
+    for key in items:
+        if tuple(location) in items[key] and key != " ":
+            if key == "C":
+                print("Castle")
+            elif key == "I":
+                poi.event()
+            elif key == "B":
+                print("Boss")
+            elif key == "S":
+                print("Store")
+            elif key == "E":
+                print("Exit")
+            input()
+        # for i in range(len(dict[item])):
+        #     if tuple(location) in item:
+        #         print("hello")
     return world_list, location, items
 
 def update_ascii_map(world, row, col):
@@ -122,14 +140,12 @@ def emoji_map(map: "ASCII map") -> "emoji map":
     map_key = {
             "#" : ":mountain: ", # wall
             "/" : ":fog: ", # fog
-            "B" : ":angry_face_with_horns:", # boss
-            "C" : ":flexed_biceps:", # cave
-            "K" : ":castle:", # king
-            "L" : ":revolving_hearts:", # love interest
-            "P" : ":frog:", # player
-            "S" : ":money_bag:", # shop/tavern
-            "H" : ":houses: ", # hotel
-            "E" : ":chequered_flag:" # exit
+            "B" : ":dragon_face:", # boss
+            "I" : ":magnifying_glass_tilted_left:", # cave
+            "C" : ":castle:", # castle
+            "E" : ":chequered_flag:", # exit
+            "S" : ":shopping_cart:", # store
+            "P" : ":frog:" # PLAYER
     }
     em = []
     # Compares the ASCII map values to the emoji map key and inserts the cooresponding emoji for the emoji map.  If the value is not in the map key, then it gets printed as empty strings on the map.
@@ -185,5 +201,61 @@ def create_player():
         else:
             system("clear")
             print("Please enter male or female")
-
+            
+    print("\nYou created the following player: ")
+    print("Name: " + name)
+    print("Gender: " + gender)
+    print("Attracted to " + attraction)
+    print("\nPress any key to continue")
     return Player(name, gender, attraction)
+
+def load_map():
+    world = [
+        "###################",
+        "#S     I    #  I  #",
+        "#           #     #",
+        "#  CP    I  #     #",
+        "########    #     #",
+        "#     S#    #     #",
+        "#      #    I     #",
+        "#      #          #",
+        "#  I  I   #       #",
+        "#         # I     #",
+        "#    I    #       #",
+        "#         #       #",
+        "###########       #",
+        "#I B#             #",
+        "#   #   #######   #",
+        "#   #   #I        #",
+        "#   #   #  ########",
+        "#       #        E#",
+        "###################"
+    ]
+# Makes a fog world map
+    fog_world = []
+    
+    for row in range(len(world)):
+        fog_world.append("")
+        fog_world[row] = "/" * len(world[row])
+    
+    # input()
+    
+    """Add the ability to turn map reveal on/off"""
+    keep_fog_off = False # True deletes fog as it is cleared.  False fills the fog back in after the player moves.
+    if not keep_fog_off:
+        fog = fog_world
+    
+    # Finds all of the items on the map and places them in a dictionary. Keys are stored in a list with coordinate pairs as tuples.
+    
+    items = {}
+    
+    for row in range(len(world)):
+        for i, item in enumerate(world[row]): 
+            if item not in items: 
+                items[item] = [(row, world[row].index(item))]
+            elif item in items:
+                items[item].append((row, i))
+    # Finds the location of the player.  Even if multiple "P" are on the map, the very first "P" is the one that will be used.
+    location = list(items["P"][0])
+
+    return map, fog_world, items, location, keep_fog_off, fog
