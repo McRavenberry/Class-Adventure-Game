@@ -1,5 +1,8 @@
 from getkey import getkey, keys
+from os import system
 from emoji import emojize, is_emoji
+import time
+from classes import Player
 
 def check_collision(direction, world_list, location, items):
     """Checks player movement (WASD) for collisions"""
@@ -120,7 +123,7 @@ def emoji_map(map: "ASCII map") -> "emoji map":
             "#" : ":mountain: ", # wall
             "/" : ":fog: ", # fog
             "B" : ":angry_face_with_horns:", # boss
-            "C" : ":flexed_biceps: ", # cave
+            "C" : ":flexed_biceps:", # cave
             "K" : ":castle:", # king
             "L" : ":revolving_hearts:", # love interest
             "P" : ":frog:", # player
@@ -148,3 +151,39 @@ def emoji_map(map: "ASCII map") -> "emoji map":
             trow = trow + symbol
         em.append(trow)
     return em
+
+def create_player():
+    system("clear")
+    while True:
+        name = input("Character Name: ")
+        if len(name) > 19:
+            system("clear")
+            print("Please enter a name that is less than 19 characters long.")
+        else:
+            break
+            
+    while True:
+        gender = input("Male or Female? ")
+        if gender[0].upper() == "M":
+            gender = "male"
+            break
+        elif gender[0].upper() == "F":
+            gender = "female"
+            break
+        else:
+            system("clear")
+            print("Please enter male or female")
+
+    while True:
+        attraction = input("Attracted to Male or Female? ")
+        if attraction[0].upper() == "M":
+            attraction = "male"
+            break
+        elif attraction[0].upper() == "F":
+            attraction = "female"
+            break
+        else:
+            system("clear")
+            print("Please enter male or female")
+
+    return Player(name, gender, attraction)

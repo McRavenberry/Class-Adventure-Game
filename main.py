@@ -39,21 +39,29 @@ from os import system
 from functions import *
 from classes import *
 from getkey import getkey
+import time
 
 # World map and player starting location
 world = [
-        "######################",
-        "#      K       #  S  #",
-        "#              #     #",
-        "#  HP       L  #     #",
-        "########       #     #",
-        "#    L #       #     #",
-        "#      #       L     #",
-        "#      #             #",
-        "#  S     C   #       #",
-        "#            # B     #",
-        "#    C       #      E#",
-        "######################"
+        "###################",
+        "#      K    #  S  #",
+        "#           #     #",
+        "#  HP    L  #     #",
+        "########    #     #",
+        "#    L #    #     #",
+        "#      #    L     #",
+        "#      #          #",
+        "#  S  C   #       #",
+        "#         # B     #",
+        "#    C    #       #",
+        "#         #       #",
+        "###########       #",
+        "#L B#             #",
+        "#   #   #######   #",
+        "#   #   #S        #",
+        "#   #   #  ########",
+        "#       #        E#",
+        "###################"
     ]
 # Makes a fog world map
 fog_world = []
@@ -62,7 +70,6 @@ for row in range(len(world)):
     fog_world.append("")
     fog_world[row] = "/" * len(world[row])
 
-print(fog_world)
 # input()
 
 """Add the ability to turn map reveal on/off"""
@@ -74,7 +81,6 @@ if not keep_fog_off:
 
 items = {}
 
-"""  Remove 'and item in key'  """
 for row in range(len(world)):
     for i, item in enumerate(world[row]): 
         if item not in items: 
@@ -96,7 +102,32 @@ location = list(items["P"][0])
 
 
 def main(world, fog_world, items, location) -> None:    
-    """ Main entry point for the game """
+    while True:
+        """ Main entry point for the game """
+        print("Love and Legends")
+        print("""
+        
+        """)
+        print("[S]tart New Game")
+        print("[C]ontinue Old Game")
+        start = input("> ")
+        if start.upper() == "S":
+            player = create_player()
+            break
+        elif start.upper() == "C":
+            print("Load game code will go here")
+            print("Press [C] to continue")
+            input()
+            break
+        system("clear")
+        
+
+
+
+
+
+
+    
     # Create weapons
     sword = Weapon("Toby", 25, 50)
     fist = Weapon("fist", 0, 10)
@@ -110,11 +141,15 @@ def main(world, fog_world, items, location) -> None:
     potion_list = [health_potion, poison_potion, love_potion]
     
     # Create characters, NPCs, and enemies
-    player = Character(name  = "Trevor", weapon = fist, health = 200)
-    shopkeeper = Character(name = "Keeper of Shops", weapon = sword)
-    thief = Character(name = "Zaam", weapon = dagger, health = 100)
+    name = "Trevor"
+    gender = "male"
+    attraction = "female"
+    player = Player(name, gender, attraction)
+    print(player.gold)
+    input()
 
     while True:
+        # time.sleep(0.2)
         system("clear")
         col = location[1]
         row = location[0]
@@ -134,6 +169,7 @@ def main(world, fog_world, items, location) -> None:
         print(location)
         
         direction = getkey()
+        time.sleep(0.2)
         world_list, location, items = check_collision(direction, world_list, location, items)
         fog_world = list2ascii(world_list)
 
