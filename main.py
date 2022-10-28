@@ -92,7 +92,8 @@ def main(world, fog_world, items, location) -> None:
     # player = Player(name, gender, attraction)
 
 
-    
+    player.inventory = ["empty", "empty", "empty", "empty", "empty"]
+
     
     while True:
         # time.sleep(0.2)
@@ -116,9 +117,13 @@ def main(world, fog_world, items, location) -> None:
         
         direction = getkey()
         if direction.lower() == "i":
+          if len(player.inventory) > 0:
+            player.view_inventory(player.inventory)
+
+          elif len(player.inventory) == 0:
+            print("Whoops, all nothing!")
+            time.sleep(2)
             system("clear")
-            print("Inventory")
-            input()
         elif direction.lower() == "s":
             system("clear")
             print("Save")
