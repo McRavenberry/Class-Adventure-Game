@@ -23,7 +23,7 @@ import time
 
 
 
-player = Player("Bob", "male", "male")
+# player = Player("Bob", "male", "male")
 
 while True:
   print("You are in the map, Press i to open and close inventory.")

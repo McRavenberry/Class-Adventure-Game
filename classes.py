@@ -3,7 +3,6 @@ from getkey import keys, getkey
 import time
 
 class Player:
-
   def __init__(self,
                name,
                gender,
@@ -20,7 +19,6 @@ class Player:
     self.max_health = 100
     self.gen = 1
     self.inventory = inventory
-
     
   def change_weapon(self, weapon):
     self.weapon = weapon
@@ -43,17 +41,20 @@ class Player:
         if i == dropping - 1:
           self.inventory.pop(dropping-1)
           system("clear")
+      self.inventory.append("empty")
     else:
       print("Phew, that was close!")
       time.sleep(2)
       system("clear")
         
   def view_inventory(self, inv):
-    print(f"EQUIPPED: {self.weapon.name}")#add equipped_item variable somehow
-    print("\nBACKPACK:")
+    print(f"EQUIPPED WEAPON: {self.weapon.name}")#add equipped_item variable somehow
+    print("EQUIPMENT:")
     for i, item in enumerate(self.inventory):
       if item != "empty":
         print(f"{i+1}. {item.name}")
+      else:
+          print(f"{i+1}. open slot")
       
     print("\nPress [e] to equip an item, press [r] or [delete] to remove an item, press [i] or [esc] to close the menu.\n\n")
 
@@ -65,10 +66,12 @@ class Player:
     if inv_button == keys.ESCAPE or inv_button.upper() == "I":
       system("clear")
     elif inv_button.upper() == "R" or inv_button == keys.DELETE:
-        dropping=int(input("Enter the inventory index to drop (1-5): "))
+        dropping = input("Enter the inventory index to drop (1-5): ")
+        dropping = int(dropping)
         Player.remove_item(self, dropping, inv)
     elif inv_button.upper() == "E" :
-        equip = int(input("Enter the inventory index of the item you'd like to equip (1-5): "))
+        equip = input("Enter the inventory index of the item you'd like to equip (1-5): ")
+        equip = int(equip)
         Player.equip_item(self, inv, equip)
 
 

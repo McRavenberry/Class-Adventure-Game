@@ -91,8 +91,8 @@ def main(world, fog_world, items, location) -> None:
     # attraction = "female"
     # player = Player(name, gender, attraction)
 
-
-    player.inventory = ["empty", "empty", "empty", "empty", "empty"]
+    
+    player.inventory = [sword, "empty", "empty", "empty", "empty"]
 
     
     while True:
