@@ -3,7 +3,6 @@ from getkey import keys, getkey
 import time
 
 class Player:
-<<<<<<< HEAD
   def __init__(self,
                name,
                gender,
@@ -15,7 +14,7 @@ class Player:
     self.gold = 15
     self.fame = 5
     self.love = 5
-    self.weapon = Weapon("fist", 0, 10)
+    self.weapon = Weapon("fist", "fist", 0, 10, 90)
     self.health = 100
     self.max_health = 100
     self.gen = 1
@@ -74,7 +73,7 @@ class Player:
         equip = input("Enter the inventory index of the item you'd like to equip (1-5): ")
         equip = int(equip)
         Player.equip_item(self, inv, equip)
-=======
+
     def __init__(self, name, gender, attr):
         self.name = name
         self.gender = gender
@@ -89,7 +88,7 @@ class Player:
 
     def change_weapon(self, weapon):
         self.weapon = weapon
->>>>>>> battle
+
 
 
 class Item:
