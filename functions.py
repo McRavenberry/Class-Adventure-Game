@@ -3,14 +3,18 @@ from os import system
 from emoji import emojize, is_emoji
 import time
 from classes import Player
+from battle import random_battle
 import poi
+from random import randint
 
-def check_collision(direction, world_list, location, items):
+def check_collision(direction, world_list, location, items, player):
     """Checks player movement (WASD) for collisions"""
     row = location[0]
     col = location[1]
-    
+
     if direction.upper() == "W" or direction == keys.UP:
+        if world_list[row-1][col] != "  " and randint(1,10) < 2:
+            player = random_battle(player)
         if world_list[row-1][col] != "#":
             location = [row-1, col]
             world_list[row-1][col] = "P"
@@ -18,6 +22,8 @@ def check_collision(direction, world_list, location, items):
         else:
             location = [row, col]            
     elif direction.upper() == "S" or direction == keys.DOWN:
+        if world_list[row-1][col] != "  " and randint(1,10) < 2:
+            player = random_battle(player)
         if world_list[row+1][col] != "#":
             location = [row+1, col]
             world_list[row+1][col] = "P"
@@ -25,6 +31,8 @@ def check_collision(direction, world_list, location, items):
         else:
             location = [row, col]
     elif direction.upper() == "A" or direction == keys.LEFT:
+        if world_list[row-1][col] != "  " and randint(1,10) < 2:
+            player = random_battle(player)
         if world_list[row][col-1] != "#":
             location = [row, col-1]
             world_list[row][col-1] = "P"
@@ -32,6 +40,8 @@ def check_collision(direction, world_list, location, items):
         else:
             location = [row, col]
     elif direction.upper() == "D" or direction == keys.RIGHT:
+        if world_list[row-1][col] != "  " and randint(1,10) < 2:
+            player = random_battle(player)
         if world_list[row][col+1] != "#":
             location = [row, col+1]
             world_list[row][col+1] = "P"
@@ -56,7 +66,7 @@ def check_collision(direction, world_list, location, items):
         # for i in range(len(dict[item])):
         #     if tuple(location) in item:
         #         print("hello")
-    return world_list, location, items
+    return world_list, location, items, player
 
 def update_ascii_map(world, row, col):
     """Updates the player position on the map"""

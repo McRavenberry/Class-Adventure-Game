@@ -41,6 +41,7 @@ from classes import *
 from getkey import getkey
 import time
 
+
 # World map and player starting location
 
 
@@ -74,9 +75,9 @@ def main(world, fog_world, items, location) -> None:
     input()
     
     # Create weapons
-    sword = Weapon("Toby", 25, 50)
-    fist = Weapon("fist", 0, 10)
-    dagger = Weapon("Dolly Dagger", 15, 20)
+    sword = Weapon("Toby", 25, 50, 50, 90)
+    fist = Weapon("fist", 0, 10, 10, 90)
+    dagger = Weapon("Dolly Dagger", 15, 20, 20, 90)
     weapon_list = [sword, fist, dagger]
 
     # Create potions
@@ -137,7 +138,7 @@ def main(world, fog_world, items, location) -> None:
             print("Family history")
             input()
         time.sleep(0.2)
-        world_list, location, items = check_collision(direction, world_list, location, items)
+        world_list, location, items, player = check_collision(direction, world_list, location, items, player)
         fog_world = list2ascii(world_list)
 
 if __name__ == "__main__":

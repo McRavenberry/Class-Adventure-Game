@@ -3,6 +3,7 @@ from getkey import keys, getkey
 import time
 
 class Player:
+<<<<<<< HEAD
   def __init__(self,
                name,
                gender,
@@ -73,6 +74,22 @@ class Player:
         equip = input("Enter the inventory index of the item you'd like to equip (1-5): ")
         equip = int(equip)
         Player.equip_item(self, inv, equip)
+=======
+    def __init__(self, name, gender, attr):
+        self.name = name
+        self.gender = gender
+        self.attr = attr
+        self.gold = 15
+        self.fame = 5
+        self.love = 5
+        self.weapon = None
+        self.health = 100
+        self.max_health = 100
+        self.gen = 1
+
+    def change_weapon(self, weapon):
+        self.weapon = weapon
+>>>>>>> battle
 
 
 class Item:
@@ -88,11 +105,12 @@ class Item:
         
 
 class Weapon(Item):
-    def __init__(self, name, price, attack, range=False):
+    def __init__(self, name, type, price, damage, accuracy):
         # inherit name and price for the Item superclass 
         super().__init__(name, price)
-        self.attack = attack
-        self.range = range
+        self.type = type
+        self.damage = damage
+        self.accuracy = accuracy
 
 
 class Potion(Item):
@@ -100,3 +118,13 @@ class Potion(Item):
         super().__init__(name, price)
         self.effect = effect
         self.amount = amount
+
+class Enemy:
+    def __init__(self, name, attack, defense, accuracy, health, max_health, gold, fame_exp):
+      self.name = name
+      self.attack = attack
+      self.accuracy = accuracy
+      self.health = health
+      self.max_health = max_health
+      self.gold = gold
+      self.fame_exp = fame_exp
