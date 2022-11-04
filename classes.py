@@ -25,12 +25,14 @@ class Player:
 
   def equip_item(self, num):
       for i in range(5):
-        if i == num - 1:
-          
+        if i == num - 1 and i < len(self.inventory):
           self.weapon = self.inventory[num-1]
           print(f"You equipped {self.weapon.name}!")
-          time.sleep(2)
-          system("clear")
+          
+      else:
+        print("You cannot equip that.")  
+      time.sleep(2)
+      system("clear")
     
     
   def remove_item(self, dropping, inven):
