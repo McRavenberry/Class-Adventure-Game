@@ -3,14 +3,35 @@ from os import system
 from emoji import emojize, is_emoji
 import time
 from classes import Player
+from battle import random_battle
 import poi
+from random import randint
+from classes import Player, Weapon, Gift, Potion
+import poi
+from store import Shop
 
-def check_collision(direction, world_list, location, items):
+from classes import Player, Weapon, Gift, Potion
+import poi
+from store import Shop
+
+
+shop = Shop([
+    Weapon("Wooden Sword", "sword", 50, 20, 70),
+    Weapon("Iron Sword", "sword", 200, 30, 75),
+    Gift("Red Rose", 30),
+    Gift("Blue Sapphire", 500),
+    Potion("Health Potion", 200, "heal", 50)
+])
+
+
+def check_collision(direction, world_list, location, items, player):
     """Checks player movement (WASD) for collisions"""
     row = location[0]
     col = location[1]
-    
+
     if direction.upper() == "W" or direction == keys.UP:
+        if world_list[row-1][col] != "  " and randint(1,10) < 2:
+            player = random_battle(player)
         if world_list[row-1][col] != "#":
             location = [row-1, col]
             world_list[row-1][col] = "P"
@@ -18,6 +39,8 @@ def check_collision(direction, world_list, location, items):
         else:
             location = [row, col]            
     elif direction.upper() == "S" or direction == keys.DOWN:
+        if world_list[row-1][col] != "  " and randint(1,10) < 2:
+            player = random_battle(player)
         if world_list[row+1][col] != "#":
             location = [row+1, col]
             world_list[row+1][col] = "P"
@@ -25,6 +48,8 @@ def check_collision(direction, world_list, location, items):
         else:
             location = [row, col]
     elif direction.upper() == "A" or direction == keys.LEFT:
+        if world_list[row-1][col] != "  " and randint(1,10) < 2:
+            player = random_battle(player)
         if world_list[row][col-1] != "#":
             location = [row, col-1]
             world_list[row][col-1] = "P"
@@ -32,6 +57,8 @@ def check_collision(direction, world_list, location, items):
         else:
             location = [row, col]
     elif direction.upper() == "D" or direction == keys.RIGHT:
+        if world_list[row-1][col] != "  " and randint(1,10) < 2:
+            player = random_battle(player)
         if world_list[row][col+1] != "#":
             location = [row, col+1]
             world_list[row][col+1] = "P"
@@ -49,14 +76,15 @@ def check_collision(direction, world_list, location, items):
             elif key == "B":
                 print("Boss")
             elif key == "S":
-                print("Store")
+                shop.buy(player)
+                break
             elif key == "E":
                 print("Exit")
             input()
         # for i in range(len(dict[item])):
         #     if tuple(location) in item:
         #         print("hello")
-    return world_list, location, items
+    return world_list, location, items, player
 
 def update_ascii_map(world, row, col):
     """Updates the player position on the map"""
