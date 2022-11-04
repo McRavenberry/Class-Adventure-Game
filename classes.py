@@ -78,7 +78,6 @@ class Player:
         self.name = name
         self.gender = gender
         self.attr = attr
-<<<<<<< HEAD
         self.gold = 15
         self.fame = 5
         self.love = 5
@@ -86,7 +85,6 @@ class Player:
         self.health = 100
         self.max_health = 100
         self.gen = 1
-=======
         self.gold = gold
         self.fame = fame
         self.love = love
@@ -94,7 +92,6 @@ class Player:
         self.health = health
         self.gen = gen
         self.inventory = []
->>>>>>> shop
 
     def change_weapon(self, weapon):
         self.weapon = weapon
@@ -127,6 +124,8 @@ class Weapon(Item):
         self.type = type
         self.damage = damage
         self.accuracy = accuracy
+        self.attack = attack
+        self.range = range
 
 player_hp = 100
 class Potion(Item):

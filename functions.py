@@ -2,13 +2,15 @@ from getkey import getkey, keys
 from os import system
 from emoji import emojize, is_emoji
 import time
-<<<<<<< HEAD
 from classes import Player
 from battle import random_battle
 import poi
 from random import randint
 
-=======
+from classes import Player, Weapon, Gift, Potion
+import poi
+from store import Shop
+
 from classes import Player, Weapon, Gift, Potion
 import poi
 from store import Shop
@@ -23,7 +25,6 @@ shop = Shop([
 ])
 
 
->>>>>>> shop
 def check_collision(direction, world_list, location, items, player):
     """Checks player movement (WASD) for collisions"""
     row = location[0]
