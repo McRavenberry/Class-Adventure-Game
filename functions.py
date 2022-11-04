@@ -2,11 +2,28 @@ from getkey import getkey, keys
 from os import system
 from emoji import emojize, is_emoji
 import time
+<<<<<<< HEAD
 from classes import Player
 from battle import random_battle
 import poi
 from random import randint
 
+=======
+from classes import Player, Weapon, Gift, Potion
+import poi
+from store import Shop
+
+
+shop = Shop([
+    Weapon("Weapon 1", 0, 0),
+    Weapon("Weapon 2", 0, 0),
+    Gift("Gift 1", 0),
+    Gift("Gift 2", 0),
+    Potion("Health Potion", 0, 0)
+])
+
+
+>>>>>>> shop
 def check_collision(direction, world_list, location, items, player):
     """Checks player movement (WASD) for collisions"""
     row = location[0]
@@ -59,7 +76,8 @@ def check_collision(direction, world_list, location, items, player):
             elif key == "B":
                 print("Boss")
             elif key == "S":
-                print("Store")
+                shop.buy(player)
+                break
             elif key == "E":
                 print("Exit")
             input()

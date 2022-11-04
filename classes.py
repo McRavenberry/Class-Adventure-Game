@@ -78,6 +78,7 @@ class Player:
         self.name = name
         self.gender = gender
         self.attr = attr
+<<<<<<< HEAD
         self.gold = 15
         self.fame = 5
         self.love = 5
@@ -85,6 +86,15 @@ class Player:
         self.health = 100
         self.max_health = 100
         self.gen = 1
+=======
+        self.gold = gold
+        self.fame = fame
+        self.love = love
+        self.weapon = weapon
+        self.health = health
+        self.gen = gen
+        self.inventory = []
+>>>>>>> shop
 
     def change_weapon(self, weapon):
         self.weapon = weapon
@@ -103,6 +113,13 @@ class Item:
 
         
 
+class Gift(Item):
+    def __init__(self, name: str, price: int = 100):
+        super().__init__(name, price)
+    def use(self, player):
+        # 
+        player.inventory.pop(player.inventory.index(self))
+
 class Weapon(Item):
     def __init__(self, name, type, price, damage, accuracy):
         # inherit name and price for the Item superclass 
@@ -111,7 +128,7 @@ class Weapon(Item):
         self.damage = damage
         self.accuracy = accuracy
 
-
+player_hp = 100
 class Potion(Item):
     def __init__(self, name: str, price: int, effect: str, amount = 0):
         super().__init__(name, price)
