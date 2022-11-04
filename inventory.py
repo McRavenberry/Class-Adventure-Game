@@ -31,10 +31,10 @@ while True:
   if uinput.upper() == "I":
     system("clear")
     if len(player.inventory) > 0:
-      player.view_inventory(player.inventory)
+      player.view_inventory()
 
     elif len(player.inventory) == 0:
-      print("Whoops, all nothing!")
+      print("You have no inventory.")
       time.sleep(2)
       system("clear")
 

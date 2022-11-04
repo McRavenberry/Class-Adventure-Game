@@ -55,11 +55,11 @@ class Shop:
         pass
 
     def restock(self, inventory=[
-            Weapon("Weapon 1", 0, 0),
-            Weapon("Weapon 2", 0, 0),
-            Gift("Gift 1", 0),
-            Gift("Gift 2", 0),
-            Potion("Health Potion", 0, 0)
+            Weapon("Wooden Sword", "sword", 50, 20, 70),
+            Weapon("Iron Sword", "sword", 200, 30, 75),
+            Gift("Red Rose", 30),
+            Gift("Blue Sapphire", 500),
+            Potion("Health Potion", 200, "heal", 50)
         ]):
         self.inventory = inventory
     """"""
@@ -130,7 +130,7 @@ class Shop:
                 
                 player_gold -= total_price
                 
-                player.inventory.append(chosen_item.name)
+                player.inventory.append(chosen_item)
                 
                 print(f"You bought {chosen_item.name} for ${total_price}.")
                 print(f"\nYou now have ${player_gold}.")

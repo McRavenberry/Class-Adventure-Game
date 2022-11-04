@@ -23,7 +23,7 @@ class Player:
   def change_weapon(self, weapon):
     self.weapon = weapon
 
-  def equip_item(self, inven, num):
+  def equip_item(self, num):
       for i in range(5):
         if i == num - 1:
           
@@ -47,14 +47,19 @@ class Player:
       time.sleep(2)
       system("clear")
         
-  def view_inventory(self, inv):
+  def view_inventory(self):
     print(f"EQUIPPED WEAPON: {self.weapon.name}")#add equipped_item variable somehow
     print("EQUIPMENT:")
-    for i, item in enumerate(self.inventory):
-      if item != "empty":
-        print(f"{i+1}. {item.name}")
-      else:
-          print(f"{i+1}. open slot")
+    for i in range(5):
+        if i < len(self.inventory):
+            print(f"{i+1}. {self.inventory[i].name}")
+        else:
+            print(f"{i+1}. empty")
+    # for i, item in enumerate(self.inventory):
+    #   if item != "empty":
+    #     print(f"{i+1}. {item.name}")
+    #   else:
+    #       print(f"{i+1}. open slot")
       
     print("\nPress [e] to equip an item, press [r] or [delete] to remove an item, press [i] or [esc] to close the menu.\n\n")
 
@@ -72,7 +77,7 @@ class Player:
     elif inv_button.upper() == "E" :
         equip = input("Enter the inventory index of the item you'd like to equip (1-5): ")
         equip = int(equip)
-        Player.equip_item(self, inv, equip)
+        Player.equip_item(self, equip)
 
     def __init__(self, name, gender, attr):
         self.name = name
@@ -124,8 +129,7 @@ class Weapon(Item):
         self.type = type
         self.damage = damage
         self.accuracy = accuracy
-        self.attack = attack
-        self.range = range
+        self.damage = damage
 
 player_hp = 100
 class Potion(Item):

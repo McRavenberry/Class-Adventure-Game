@@ -17,11 +17,11 @@ from store import Shop
 
 
 shop = Shop([
-    Weapon("Weapon 1", 0, 0),
-    Weapon("Weapon 2", 0, 0),
-    Gift("Gift 1", 0),
-    Gift("Gift 2", 0),
-    Potion("Health Potion", 0, 0)
+    Weapon("Wooden Sword", "sword", 50, 20, 70),
+    Weapon("Iron Sword", "sword", 200, 30, 75),
+    Gift("Red Rose", 30),
+    Gift("Blue Sapphire", 500),
+    Potion("Health Potion", 200, "heal", 50)
 ])
 
 
